@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: 'Roboto Slab', 'Roboto', serif;
+  --font-sans: 'Roboto', 'Open Sans', system-ui, -apple-system, sans-serif;
+  --color-brand-red: #ea1d25;
+  --color-brand-red-dark: #b80d14;
+  --color-brand-blue: #00a4e4;
+  --color-brand-blue-dark: #0284c7;
+  --color-brand-cyan: #38bdf8;
+  --color-dark-bg: #070a12;
+  --color-dark-surface: #0d1322;
+  --color-dark-card: #131a2e;
+  --color-dark-border: #1e2942;
+}
+
+@layer base {
+  * {
+    border-color: rgba(226, 232, 240, 0.9);
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Roboto', 'Open Sans', system-ui, -apple-system, sans-serif;
+    background-color: #ffffff;
+    color: #1e293b;
+    overflow-x: hidden;
+    margin: 0;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Roboto Slab', 'Roboto', serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Real AAD Logo Brand Accent Stripes (Red & Sky Blue) */
+.brand-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ea1d25,
+    #ea1d25 10px,
+    #00a4e4 10px,
+    #00a4e4 20px
+  );
+}
+
+.brand-pattern {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(0, 164, 228, 0.08),
+    rgba(0, 164, 228, 0.08) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+/* Light Industrial Grid with subtle cyan tint */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 164, 228, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 164, 228, 0.05) 1px, transparent 1px);
+}
+
+/* Keyframe Animations for Smooth Transitions */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes slideProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-slide-progress {
+  animation: slideProgress 5.5s linear forwards;
+}
+
+/* Custom interactive transition utility */
+.card-hover-transition {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease-out,
+              background-color 0.35s ease-out;
+}
+
+.card-hover-transition:hover {
+  transform: translateY(-6px);
+}
+
+/* Custom scrollbar for light theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ea1d25;
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Outer Circular Globe Background -->
+  <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#00a4e4" stroke-width="3"/>
+  
+  <!-- Globe Meridians and Parallels -->
+  <g fill="none" stroke="#00a4e4" stroke-width="2.2" opacity="0.95">
+    <!-- Center vertical meridian -->
+    <line x1="50" y1="2" x2="50" y2="98" stroke-width="2.5"/>
+    <!-- Curved meridians -->
+    <ellipse cx="50" cy="50" rx="25" ry="48"/>
+    <!-- Latitudes -->
+    <ellipse cx="50" cy="27" rx="39" ry="14"/>
+    <ellipse cx="50" cy="73" rx="39" ry="14"/>
+  </g>
+
+  <!-- Central Red Banner Ribbon -->
+  <g>
+    <rect x="5" y="36" width="90" height="28" rx="5" fill="#ea1d25" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="50" y="56" text-anchor="middle" font-family="'Roboto', 'Arial Black', sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">AAD</text>
+  </g>
+</svg>
