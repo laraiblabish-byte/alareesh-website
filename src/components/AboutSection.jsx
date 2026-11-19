@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ShieldCheck, CheckCircle2, Award, ArrowRight, Phone } from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
 import Reveal from './Reveal';
@@ -126,21 +127,29 @@ export default function AboutSection({ onOpenQuote }) {
 
             {/* CTA action buttons */}
             <Reveal animation="fade-up" delay={600}>
-              <div className="flex flex-wrap items-center gap-4 pt-3">
+              <div className="flex flex-wrap items-center gap-3 pt-3">
                 <button
                   onClick={onOpenQuote}
                   className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] rounded-xl shadow-lg shadow-red-950/20 flex items-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5 border border-red-500/30 active:scale-[0.98]"
                 >
-                  <span>Request Project Proposal</span>
+                  <span>Request Proposal</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
+
+                <Link
+                  to="/about"
+                  className="px-5 py-3 text-xs font-bold text-slate-700 hover:text-[#ea1d25] bg-slate-100 hover:bg-slate-200/80 border border-slate-200 rounded-xl flex items-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5"
+                >
+                  <span>About Us Profile</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#00a4e4]" />
+                </Link>
 
                 <a
                   href={`tel:${COMPANY_INFO.phoneRaw}`}
                   className="px-5 py-3 text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 rounded-xl flex items-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#ea1d25]" />
-                  <span>Speak with an Engineer</span>
+                  <span>Call Us</span>
                 </a>
               </div>
             </Reveal>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SERVICES } from '../data/companyData';
-import { ArrowRight, Check, X, Info } from 'lucide-react';
+import { ArrowRight, Check, X, ExternalLink } from 'lucide-react';
 import Reveal from './Reveal';
 
 export default function ServicesSection({ onSelectServiceForQuote }) {
@@ -57,7 +58,10 @@ export default function ServicesSection({ onSelectServiceForQuote }) {
                 className="group relative rounded-2xl bg-white border border-slate-200 hover:border-sky-400 transition-all duration-500 flex flex-col overflow-hidden hover:shadow-xl card-hover-transition h-full"
               >
                 {/* Service Featured Image Container */}
-                <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+                <Link
+                  to={`/service/${service.slug}`}
+                  className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100 block"
+                >
                   <img
                     src={service.image}
                     alt={service.title}
@@ -82,14 +86,16 @@ export default function ServicesSection({ onSelectServiceForQuote }) {
                       {service.subtitle}
                     </span>
                   </div>
-                </div>
+                </Link>
 
                 {/* Service Content */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <h3 className="font-heading text-lg font-bold text-slate-900 group-hover:text-[#00a4e4] transition-colors duration-300">
-                      {service.title}
-                    </h3>
+                    <Link to={`/service/${service.slug}`}>
+                      <h3 className="font-heading text-lg font-bold text-slate-900 group-hover:text-[#ea1d25] transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                    </Link>
                     <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
                       {service.shortDesc}
                     </p>
@@ -107,13 +113,13 @@ export default function ServicesSection({ onSelectServiceForQuote }) {
 
                   {/* Action Footers */}
                   <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-xs">
-                    <button
-                      onClick={() => setSelectedService(service)}
-                      className="text-slate-600 hover:text-[#00a4e4] font-semibold flex items-center gap-1 transition-colors duration-200"
+                    <Link
+                      to={`/service/${service.slug}`}
+                      className="text-slate-700 hover:text-[#ea1d25] font-bold flex items-center gap-1 transition-colors duration-200"
                     >
-                      <Info className="w-3.5 h-3.5 text-[#00a4e4]" />
-                      <span>View Scope</span>
-                    </button>
+                      <span>Explore Page</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
 
                     <button
                       onClick={() => onSelectServiceForQuote(service.title)}
@@ -185,7 +191,7 @@ export default function ServicesSection({ onSelectServiceForQuote }) {
                   Service Description & Methodology
                 </h4>
                 <p className="text-slate-600 leading-relaxed">
-                  {selectedService.fullDesc}
+                  {selectedService.fullDesc || selectedService.shortDesc}
                 </p>
               </div>
 
@@ -222,23 +228,33 @@ export default function ServicesSection({ onSelectServiceForQuote }) {
 
             {/* Modal Footer */}
             <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
-              <button
+              <Link
+                to={`/service/${selectedService.slug}`}
                 onClick={() => setSelectedService(null)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+                className="text-xs font-bold text-[#00a4e4] hover:underline flex items-center gap-1"
               >
-                Close
-              </button>
-              <button
-                onClick={() => {
-                  const title = selectedService.title;
-                  setSelectedService(null);
-                  onSelectServiceForQuote(title);
-                }}
-                className="px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] rounded-lg shadow-md flex items-center gap-1.5 border border-red-500/40 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <span>Request Quote for this Service</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                <span>Full Technical Specifications Page</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </Link>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => {
+                    const title = selectedService.title;
+                    setSelectedService(null);
+                    onSelectServiceForQuote(title);
+                  }}
+                  className="px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] rounded-lg shadow-md flex items-center gap-1.5 border border-red-500/40 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <span>Request Quote</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
           </div>

@@ -39,86 +39,104 @@ export const COMPANY_INFO = {
 
 export const SERVICES = [
   {
-    id: "controlled-demolition",
-    title: "Controlled Demolition Services",
-    subtitle: "Precision Structural Dismantling",
-    category: "Structural",
-    image: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/demolition-485x335.png",
-    fallbackImage: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
-    shortDesc: "Engineered and controlled demolition of commercial multi-storey buildings, residential villas, and industrial structures with zero vibration risk to neighboring buildings.",
-    fullDesc: "Al Areesh provides specialized controlled demolition services across Dubai and the UAE. Utilizing precision hydraulic breakers, robotic crushers, and diamond wire sawing, our certified engineers ensure complete safety, noise mitigation, and zero collateral damage in high-density urban environments.",
+    id: "building-demolition-services",
+    slug: "building-demolition-services-in-dubai-uae",
+    title: "Building Demolition Services in Dubai UAE",
+    subtitle: "Commercial & High-Rise Dismantling",
+    category: "Demolition",
+    image: "/service-building-demolition.jpg",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2026/10/01-hero-demolition-dubai.jpg",
+    shortDesc: "Comprehensive building demolition for commercial multi-storey buildings, residential towers, and industrial complexes in Dubai.",
     features: [
-      "Residential Villa & Multi-Storey Building Demolition",
-      "Vibration-controlled mechanical dismantling",
-      "Complete Dubai Municipality NOC & permit acquisition",
-      "Dust suppression water misting cannons during work",
-      "Strict compliance with Dubai Civil Defence regulations"
+      "Multi-storey commercial & tower deconstruction",
+      "Floor-by-floor controlled mechanical dismantling",
+      "Dubai Municipality permits & utility NOCs handled",
+      "Full seismic vibration and noise monitoring",
+      "Atomized mist water dust suppression cannons"
     ],
-    equipment: ["Long-Reach High-Rise Excavators", "Hydraulic Shears & Pulverizers", "Mist Dust Cannons"]
+    equipment: ["Long-Reach High-Rise Excavators", "Hydraulic Concrete Pulverizers", "Mist Dust Cannons"]
   },
   {
-    id: "excavation-earthworks",
-    title: "Excavation & Earthworks",
-    subtitle: "Heavy Site Preparation & Grading",
+    id: "concrete-building-demolition",
+    slug: "concrete-building-demolition",
+    title: "Concrete Building Demolition",
+    subtitle: "Heavy Reinforced Concrete Crushing",
+    category: "Demolition",
+    image: "/service-concrete-building.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2026/10/Screenshot_2026-10-27_112048-transformed.png",
+    shortDesc: "Precision deconstruction of heavily reinforced concrete (RCC) frames, post-tensioned slabs, and foundation rafts with zero vibration damage.",
+    features: [
+      "Heavy reinforced concrete frame pulverization",
+      "Diamond wire sawing and core drilling",
+      "Silent hydraulic jaw crushing without impact shock",
+      "On-site concrete rubble recycling into road base",
+      "Electromagnetic scrap rebar extraction"
+    ],
+    equipment: ["Hydraulic Pulverizers & Shears", "Diamond Wire Sawing Rigs", "Mobile Concrete Crushers"]
+  },
+  {
+    id: "villa-demolition-dubai",
+    slug: "villa-demolition-dubai",
+    title: "Villa Demolition Dubai",
+    subtitle: "Residential Community Teardowns",
+    category: "Demolition",
+    image: "/service-villa-demolition.jpg",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-27-at-4.14.57-PM.jpeg",
+    shortDesc: "Turnkey residential villa demolition in Dubai (Jumeirah, Palm Jumeirah, Emirates Hills, Al Barsha) with full boundary wall and neighbor protection.",
+    features: [
+      "G+1 & G+2 residential villa demolition",
+      "Swimming pool, tank, and annex deconstruction",
+      "DEWA disconnection & Dubai Municipality permits",
+      "Surgical boundary wall saw-cutting separation",
+      "Final clean plot leveling and handover certificate"
+    ],
+    equipment: ["Low-Noise Tier-4 Excavators", "Water Mist Dust Cannons", "Mini-Excavators & Skid Steers"]
+  },
+  {
+    id: "excavation-site-clearance",
+    slug: "excavation-site-clearance-services-in-dubai",
+    title: "Excavation Site Clearance Services in Dubai",
+    subtitle: "Deep Basement & Bulk Earthworks",
     category: "Earthworks",
-    image: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/excavation-485x335.png",
-    fallbackImage: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=800&q=80",
-    shortDesc: "Large-scale bulk excavation, deep basement digging, rock trenching, soil leveling, and comprehensive site grading for commercial and residential developments.",
-    fullDesc: "As leading excavation contractors in Dubai, Al Areesh manages deep earthworks and site leveling for residential developments, commercial high-rises, and industrial zones. We ensure proper soil testing, shoring coordination, and fast earth-moving with our heavy fleet.",
+    image: "/service-site-clearance.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2026/10/Screenshot-2026-10-27-113044.png",
+    shortDesc: "Deep basement excavation, bulk earth moving, rock trenching, vegetation removal, and certified site clearance across Dubai and UAE.",
     features: [
-      "Bulk earth excavation & basement digging",
-      "Rock cutting & trenching for underground utilities",
-      "Laser-guided site leveling and compaction",
-      "Shoring support coordination & dewatering support",
-      "Safe soil removal and approved dumping"
+      "Bulk earthworks for multi-level basements",
+      "Rock trenching for DEWA & infrastructure utilities",
+      "Shoring support coordination & dewatering systems",
+      "Complete site clearing of vegetation and old footings",
+      "Laser grading, compaction, and density certificates"
     ],
-    equipment: ["CAT 336 / 349 Heavy Excavators", "Bulldozers & Graders", "Vibratory Soil Compactors"]
+    equipment: ["30-50 Ton Heavy Excavators", "Vibratory Soil Compactors", "32m³ Heavy Tipper Fleets"]
   },
   {
-    id: "dismantling-structural",
-    title: "Dismantling & Structural Removal",
-    subtitle: "Industrial Steel & Plant Decommissioning",
-    category: "Industrial",
-    image: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/ChatGPT-Image-Jan-27-2026-01_06_04-PM-485x335.png",
-    fallbackImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
-    shortDesc: "Complete or partial dismantling of industrial steel structures, factory warehouses, aircraft hangars, and specialized interior architectural strip-outs.",
-    fullDesc: "We specialize in structural dismantling where preserving portions of the framework or surrounding architecture is critical. From steel roof truss removal to mechanical plant decommissioning, our teams execute precise unbolting, cold cutting, and crane lifts.",
+    id: "demolition-contractors-uae",
+    slug: "demolition-contractors-in-uae",
+    title: "Demolition Contractors in UAE",
+    subtitle: "All-Emirates Turnkey Contracting",
+    category: "Demolition",
+    image: "/service-demolition-contractors.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2026/10/Screenshot_2026-10-27_113947-transformed.png",
+    shortDesc: "Class-1 licensed demolition contracting across Dubai, Abu Dhabi, Sharjah, and Ajman with 12+ years experience and 300+ completed projects.",
     features: [
-      "Industrial warehouse & steel frame dismantling",
-      "Factory machinery decommissioning & relocation prep",
-      "Internal strip-out (partition walls, MEP, flooring)",
-      "High-tonnage mobile crane lifting & rigging",
-      "Salvageable equipment recovery & cataloging"
+      "Dubai Municipality Licensed Class-1 Contractor #709421",
+      "Turnkey management: surveys, NOCs, deconstruction & handover",
+      "Zero-incident safety record under UAE OSHAD rules",
+      "In-house 50+ heavy machinery fleet with no rental markups",
+      "Comprehensive material recycling and green building reports"
     ],
-    equipment: ["Mobile Telescopic Cranes", "Thermal & Cold Cutting Equipment", "Scissor & Boom Lifts"]
-  },
-  {
-    id: "scrap-metal-recycling",
-    title: "Scrap & Metal Recycling",
-    subtitle: "Eco-Friendly Material Recovery",
-    category: "Recycling",
-    image: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/scrap-485x335.png",
-    fallbackImage: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
-    shortDesc: "On-site sorting, collection, processing, and eco-friendly recycling of scrap rebar, steel beams, copper, aluminum, and industrial metal waste.",
-    fullDesc: "In full alignment with Dubai's sustainable green building initiatives, Al Areesh recycles up to 85% of salvageable demolition materials. We process scrap steel and copper directly on site to reduce environmental footprint and provide scrap credit value to project developers.",
-    features: [
-      "On-site hydraulic scrap shearing and baling",
-      "Rebar separation from pulverized concrete",
-      "Certified scrap weighing and competitive metal buyback",
-      "Eco-friendly transport to approved UAE recycling smelters",
-      "Comprehensive green building waste diversion reports"
-    ],
-    equipment: ["Magnetic Scrap Handlers", "Hydraulic Metal Shears", "Heavy Baling Systems"]
+    equipment: ["Complete Heavy Demolition Fleet", "Hydraulic Breakers & Crushers", "Transport & Logistics Fleet"]
   },
   {
     id: "concrete-breaking-rcc",
-    title: "Concrete Breaking & RCC Works",
+    slug: "concrete-breaking-rcc-works",
+    title: "Concrete Breaking RCC Works",
     subtitle: "Heavy Rock & Foundation Demolition",
     category: "Demolition",
-    image: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/concrete-485x335.png",
-    fallbackImage: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80",
+    image: "/service-concrete.jpg",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/concrete-485x335.png",
     shortDesc: "Heavy reinforced concrete (RCC) breaking, pile cap chipping, foundation dismantling, rock breaking, and precision asphalt/concrete sawing.",
-    fullDesc: "Handling the toughest reinforced concrete requires power and finesse. Al Areesh operates high-impact hydraulic breakers, silent chemical expansive agents, and diamond wall saws for breaking thick raft foundations, bridge structures, and retaining walls.",
     features: [
       "Heavily reinforced concrete foundation & footing breaking",
       "Hydraulic rock breaker attachments (2000kg - 4500kg)",
@@ -129,14 +147,86 @@ export const SERVICES = [
     equipment: ["Furukawa & Montabert Hydraulic Breakers", "Track-Mounted Mobile Crushers", "Diamond Wall Saws"]
   },
   {
+    id: "scrap-metal-recycling",
+    slug: "scrap-metal-recycling",
+    title: "Scrap Metal Recycling",
+    subtitle: "Eco-Friendly Material Recovery",
+    category: "Recycling",
+    image: "/service-scrap.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/scrap-485x335.png",
+    shortDesc: "On-site sorting, collection, processing, and eco-friendly recycling of scrap rebar, steel beams, copper, aluminum, and industrial metal waste.",
+    features: [
+      "On-site hydraulic scrap shearing and baling",
+      "Rebar separation from pulverized concrete",
+      "Certified scrap weighing and competitive metal buyback",
+      "Eco-friendly transport to approved UAE recycling smelters",
+      "Comprehensive green building waste diversion reports"
+    ],
+    equipment: ["Magnetic Scrap Handlers", "Hydraulic Metal Shears", "Heavy Baling Systems"]
+  },
+  {
+    id: "dismantling-structural",
+    slug: "dismantling-structural-removal",
+    title: "Dismantling Structural Removal",
+    subtitle: "Industrial Steel & Plant Decommissioning",
+    category: "Industrial",
+    image: "/real-industrial-dismantling.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/ChatGPT-Image-Jan-27-2026-01_06_04-PM-485x335.png",
+    shortDesc: "Complete or partial dismantling of industrial steel structures, factory warehouses, aircraft hangars, and specialized interior architectural strip-outs.",
+    features: [
+      "Industrial warehouse & steel frame dismantling",
+      "Factory machinery decommissioning & relocation prep",
+      "Internal strip-out (partition walls, MEP, flooring)",
+      "High-tonnage mobile crane lifting & rigging",
+      "Salvageable equipment recovery & cataloging"
+    ],
+    equipment: ["Mobile Telescopic Cranes", "Thermal & Cold Cutting Equipment", "Scissor & Boom Lifts"]
+  },
+  {
+    id: "excavation-earthworks",
+    slug: "excavation-earthworks",
+    title: "Excavation Earthworks",
+    subtitle: "Heavy Site Preparation & Grading",
+    category: "Earthworks",
+    image: "/real-urban-excavation.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/excavation-485x335.png",
+    shortDesc: "Large-scale bulk excavation, deep basement digging, rock trenching, soil leveling, and comprehensive site grading for commercial and residential developments.",
+    features: [
+      "Bulk earth excavation & basement digging",
+      "Rock cutting & trenching for underground utilities",
+      "Laser-guided site leveling and compaction",
+      "Shoring support coordination & dewatering support",
+      "Safe soil removal and approved dumping"
+    ],
+    equipment: ["CAT 336 / 349 Heavy Excavators", "Bulldozers & Graders", "Vibratory Soil Compactors"]
+  },
+  {
+    id: "controlled-demolition",
+    slug: "controlled-demolition-services",
+    title: "Controlled Demolition Services",
+    subtitle: "Precision Structural Dismantling",
+    category: "Structural",
+    image: "/real-excavator-building.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/demolition-485x335.png",
+    shortDesc: "Engineered and controlled demolition of commercial multi-storey buildings, residential villas, and industrial structures with zero vibration risk to neighboring buildings.",
+    features: [
+      "Residential Villa & Multi-Storey Building Demolition",
+      "Vibration-controlled mechanical dismantling",
+      "Complete Dubai Municipality NOC & permit acquisition",
+      "Dust suppression water misting cannons during work",
+      "Strict compliance with Dubai Civil Defence regulations"
+    ],
+    equipment: ["Long-Reach High-Rise Excavators", "Hydraulic Shears & Pulverizers", "Mist Dust Cannons"]
+  },
+  {
     id: "transportation-waste",
-    title: "Transportation & Waste Disposal",
+    slug: "transportation-waste-disposal",
+    title: "Transportation Waste Disposal",
     subtitle: "Municipality Approved Waste Hauling",
     category: "Logistics",
-    image: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/trasport-485x335.png",
-    fallbackImage: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80",
+    image: "/service-waste-fleet.png",
+    fallbackImage: "https://alareeshdemolition.ae/wp-content/uploads/2023/12/trasport-485x335.png",
     shortDesc: "Safe, rapid transport of demolition debris, bulk aggregate, and hazardous construction waste with our own fleet of municipality-permitted tipper trailers.",
-    fullDesc: "We provide fully compliant waste management and transportation across Dubai, Sharjah, and Abu Dhabi. With a licensed fleet of heavy 32-cubic-meter tipper trucks, we transport debris to official Dubai Municipality landfills and issue legitimate disposal certificates.",
     features: [
       "In-house fleet of heavy tipper trucks & low-bed trailers",
       "Official Dubai Municipality landfill disposal manifests",
