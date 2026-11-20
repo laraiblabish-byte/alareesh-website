@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Play, 
@@ -15,16 +15,24 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FloatingActions from '../components/FloatingActions';
 import Reveal from '../components/Reveal';
+import { getGalleryVideos } from '../lib/supabase';
+import { 
+  extractYouTubeId, 
+  getVideoPoster, 
+  getYouTubeEmbedUrl, 
+  getYouTubeWatchUrl 
+} from '../lib/videoHelper';
 
 export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) {
   const [activeVideo, setActiveVideo] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
 
   // Exact 8 official Al Areesh Demolition operational video reels
-  const videoItems = [
+  const defaultVideoItems = [
     {
       id: 1,
       youtubeId: 'TVmIlM3znvg',
+      video_url: 'https://www.youtube.com/watch?v=TVmIlM3znvg',
       title: 'Commercial Multi-Storey Building High-Reach Demolition',
       category: 'Building Demolition',
       duration: '03:45',
@@ -36,6 +44,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 2,
       youtubeId: 'HyZT6O17G6g',
+      video_url: 'https://www.youtube.com/watch?v=HyZT6O17G6g',
       title: 'Controlled High-Boom Structural Deconstruction',
       category: 'Controlled Demolition',
       duration: '02:50',
@@ -47,6 +56,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 3,
       youtubeId: 'Th2_6MKeI54',
+      video_url: 'https://www.youtube.com/watch?v=Th2_6MKeI54',
       title: 'Building Demolition & Reinforced Concrete Pulverization',
       category: 'Building Demolition',
       duration: '01:00',
@@ -58,6 +68,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 4,
       youtubeId: 'XaSD5FoSP-A',
+      video_url: 'https://www.youtube.com/watch?v=XaSD5FoSP-A',
       title: 'Heavy Hydraulic Rock Breaker & RCC Foundation Work',
       category: 'Concrete Breaking',
       duration: '02:30',
@@ -69,6 +80,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 5,
       youtubeId: 'JjIKSFjczNU',
+      video_url: 'https://www.youtube.com/watch?v=JjIKSFjczNU',
       title: 'Turnkey Residential Villa Demolition & Plot Clearance',
       category: 'Villa Demolition',
       duration: '01:00',
@@ -80,6 +92,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 6,
       youtubeId: 'dvU-Pk_DuRc',
+      video_url: 'https://www.youtube.com/watch?v=dvU-Pk_DuRc',
       title: 'Deep Basement Bulk Earthworks & Tipper Hauling',
       category: 'Excavation',
       duration: '04:10',
@@ -91,6 +104,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 7,
       youtubeId: 'YGOtSKc97dA',
+      video_url: 'https://www.youtube.com/watch?v=YGOtSKc97dA',
       title: 'Industrial Steel Structure Dismantling & Cold Shearing',
       category: 'Industrial',
       duration: '01:00',
@@ -102,6 +116,7 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     {
       id: 8,
       youtubeId: '2KJkLdGBJTY',
+      video_url: 'https://www.youtube.com/watch?v=2KJkLdGBJTY',
       title: 'Heavy Logistics Fleet & Live Site Operations',
       category: 'Fleet & Logistics',
       duration: '01:00',
@@ -112,11 +127,24 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
     }
   ];
 
+  const [videos, setVideos] = useState(defaultVideoItems);
+
+  // Sync with live Supabase database
+  useEffect(() => {
+    let isMounted = true;
+    getGalleryVideos().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setVideos(data);
+      }
+    });
+    return () => { isMounted = false; };
+  }, []);
+
   const categories = ['All', 'Building Demolition', 'Controlled Demolition', 'Concrete Breaking', 'Villa Demolition', 'Excavation', 'Industrial', 'Fleet & Logistics'];
 
   const filteredVideos = activeCategory === 'All'
-    ? videoItems
-    : videoItems.filter(v => v.category.toLowerCase() === activeCategory.toLowerCase());
+    ? videos
+    : videos.filter(v => v.category?.toLowerCase() === activeCategory.toLowerCase());
 
   const content = (
     <div className="bg-white text-slate-800 font-sans selection:bg-[#ea1d25] selection:text-white">
@@ -240,75 +268,99 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
             </div>
           </Reveal>
 
-          {/* 8 Video Cards Grid */}
+          {/* Video Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredVideos.map((item, index) => (
-              <Reveal key={item.id} animation="fade-up" delay={(index % 4) * 60}>
-                <div
-                  onClick={() => setActiveVideo(item)}
-                  className="h-full group rounded-3xl bg-white border border-slate-200 hover:border-[#ea1d25] shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
-                >
-                  {/* Poster & Play Button Container */}
-                  <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-slate-950">
-                    <img
-                      src={item.poster}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = item.fallbackPoster;
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent transition-opacity group-hover:opacity-90" />
+            {filteredVideos.map((item, index) => {
+              const posterUrl = getVideoPoster(item);
+              return (
+                <Reveal key={item.id || index} animation="fade-up" delay={(index % 4) * 60}>
+                  <div
+                    onClick={() => setActiveVideo(item)}
+                    className="h-full group rounded-3xl bg-white border border-slate-200 hover:border-[#ea1d25] shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
+                  >
+                    {/* Poster & Play Button Container */}
+                    <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-slate-950">
+                      <img
+                        src={posterUrl}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/service-building-demolition.jpg';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent transition-opacity group-hover:opacity-90" />
 
-                    {/* Play Icon Badge */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#ea1d25]/90 text-white flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-[#ea1d25] transition-all duration-300 pl-1 border border-white/20">
-                        <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white" />
+                      {/* Play Icon Badge */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#ea1d25]/90 text-white flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-[#ea1d25] transition-all duration-300 pl-1 border border-white/20">
+                          <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white" />
+                        </div>
+                      </div>
+
+                      {/* Duration Tag */}
+                      <div className="absolute bottom-3 right-3">
+                        <span className="text-[11px] font-mono font-bold px-2 py-1 rounded-md bg-black/70 backdrop-blur-md text-white flex items-center gap-1 border border-white/20">
+                          <Clock className="w-3 text-[#00a4e4]" />
+                          <span>{item.duration || '02:00'}</span>
+                        </span>
+                      </div>
+
+                      {/* Category Pill */}
+                      <div className="absolute top-3 left-3">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/95 text-[#ea1d25] shadow-sm">
+                          {item.category}
+                        </span>
+                      </div>
+
+                      {/* Direct YouTube Link Badge on Card */}
+                      {(() => {
+                        const cardYtId = extractYouTubeId(item.youtubeId || item.video_url || item.videoUrl);
+                        if (cardYtId) {
+                          return (
+                            <a
+                              href={getYouTubeWatchUrl(cardYtId)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-md bg-red-600/90 hover:bg-red-600 text-white text-[10px] font-bold flex items-center gap-1 transition-all shadow-md hover:scale-105"
+                              title="Watch directly on YouTube"
+                            >
+                              <span>YouTube</span>
+                              <ExternalLink className="w-2.5 h-2.5" />
+                            </a>
+                          );
+                        }
+                        return null;
+                      })()}
+                    </div>
+
+                    {/* Details */}
+                    <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                      <div className="space-y-1.5">
+                        <span className="text-[11px] font-bold text-[#00a4e4] uppercase tracking-wider">
+                          {item.location || 'Dubai, UAE'}
+                        </span>
+                        <h3 className="font-heading font-bold text-sm sm:text-base text-slate-900 group-hover:text-[#ea1d25] transition-colors leading-snug line-clamp-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
+                          {item.desc || item.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#ea1d25]">
+                        <span className="flex items-center gap-1">
+                          <Play className="w-3.5 h-3.5 fill-[#ea1d25]" />
+                          <span>Play Video Reel</span>
+                        </span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
-
-                    {/* Duration Tag */}
-                    <div className="absolute bottom-3 right-3">
-                      <span className="text-[11px] font-mono font-bold px-2 py-1 rounded-md bg-black/70 backdrop-blur-md text-white flex items-center gap-1 border border-white/20">
-                        <Clock className="w-3 h-3 text-[#00a4e4]" />
-                        <span>{item.duration}</span>
-                      </span>
-                    </div>
-
-                    {/* Category Pill */}
-                    <div className="absolute top-3 left-3">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/95 text-[#ea1d25] shadow-sm">
-                        {item.category}
-                      </span>
-                    </div>
                   </div>
-
-                  {/* Details */}
-                  <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                    <div className="space-y-1.5">
-                      <span className="text-[11px] font-bold text-[#00a4e4] uppercase tracking-wider">
-                        {item.location}
-                      </span>
-                      <h3 className="font-heading font-bold text-sm sm:text-base text-slate-900 group-hover:text-[#ea1d25] transition-colors leading-snug line-clamp-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                        {item.desc}
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#ea1d25]">
-                      <span className="flex items-center gap-1">
-                        <Play className="w-3.5 h-3.5 fill-[#ea1d25]" />
-                        <span>Play Video Reel</span>
-                      </span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
 
         </div>
@@ -335,16 +387,69 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
               <X className="w-5 h-5" />
             </button>
 
-            {/* REAL Working YouTube Video Player Embed */}
-            <div className="relative aspect-video w-full bg-black">
-              <iframe
-                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-                title={activeVideo.title}
-                className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+            {/* Video Player (Supports YouTube Embeds & Direct HTML5 MP4/WebM) */}
+            <div className="relative aspect-video w-full bg-black flex items-center justify-center">
+              {(() => {
+                const ytId = extractYouTubeId(activeVideo.youtubeId || activeVideo.video_url || activeVideo.videoUrl);
+                if (ytId) {
+                  return (
+                    <iframe
+                      src={getYouTubeEmbedUrl(ytId, { autoplay: true })}
+                      title={activeVideo.title}
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                    />
+                  );
+                }
+                const fileUrl = activeVideo.video_url || activeVideo.videoUrl;
+                if (fileUrl) {
+                  return (
+                    <video
+                      src={fileUrl}
+                      poster={getVideoPoster(activeVideo)}
+                      controls
+                      autoPlay
+                      playsInline
+                      className="w-full h-full object-contain"
+                    >
+                      Your browser does not support HTML5 video.
+                    </video>
+                  );
+                }
+                return (
+                  <div className="text-center p-6 text-slate-400 text-sm">
+                    Video stream unavailable.
+                  </div>
+                );
+              })()}
             </div>
+
+            {/* YouTube Playback Resilience Notice Bar */}
+            {(() => {
+              const ytId = extractYouTubeId(activeVideo.youtubeId || activeVideo.video_url || activeVideo.videoUrl);
+              if (ytId) {
+                return (
+                  <div className="px-5 py-2.5 bg-slate-950 border-t border-slate-800 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 text-slate-300">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#00a4e4] shrink-0" />
+                      <span>Official Al Areesh Demolition footage. If browser restricts embedded iframes:</span>
+                    </div>
+                    <a
+                      href={getYouTubeWatchUrl(ytId)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#ea1d25] hover:text-red-400 font-bold inline-flex items-center gap-1 transition-colors"
+                    >
+                      <span>Watch Directly on YouTube</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                );
+              }
+              return null;
+            })()}
 
             {/* Video Details & Actions */}
             <div className="p-5 sm:p-6 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -354,28 +459,37 @@ export default function VideoGalleryPage({ includeLayout = true, onOpenQuote }) 
                     {activeVideo.category}
                   </span>
                   <span className="text-xs text-[#00a4e4] font-medium">
-                    {activeVideo.location}
+                    {activeVideo.location || 'Dubai, UAE'}
                   </span>
                 </div>
                 <h3 className="text-base sm:text-lg font-bold font-heading text-white">
                   {activeVideo.title}
                 </h3>
                 <p className="text-xs text-slate-400 line-clamp-2">
-                  {activeVideo.desc}
+                  {activeVideo.desc || activeVideo.description}
                 </p>
               </div>
 
               {/* Action Buttons */}
               <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
-                <a
-                  href={`https://www.youtube.com/watch?v=${activeVideo.youtubeId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-white/10"
-                >
-                  <span>Open on YouTube</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                {(() => {
+                  const ytId = extractYouTubeId(activeVideo.youtubeId || activeVideo.video_url || activeVideo.videoUrl);
+                  if (ytId) {
+                    return (
+                      <a
+                        href={getYouTubeWatchUrl(ytId)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-md shadow-red-600/30"
+                      >
+                        <Play className="w-3.5 h-3.5 fill-white" />
+                        <span>Watch on YouTube</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    );
+                  }
+                  return null;
+                })()}
 
                 <button
                   onClick={() => {

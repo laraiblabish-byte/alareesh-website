@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { COMPANY_INFO, SERVICES } from '../data/companyData';
 import { Phone, Mail, MapPin, Send, CheckCircle2, Clock, ShieldCheck, MessageSquare } from 'lucide-react';
 import Reveal from './Reveal';
+import { submitContactMessage } from '../lib/supabase';
 
 export default function QuoteSection({ initialData = null }) {
   const [formData, setFormData] = useState({
@@ -15,10 +16,27 @@ export default function QuoteSection({ initialData = null }) {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await submitContactMessage({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: `Quote Request: ${formData.service}`,
+        message: `Service: ${formData.service}\nLocation: ${formData.location}\nTimeline: ${formData.timeline}\nDetails: ${formData.message || 'Standard quote request'}`,
+        source: 'Home Quote Form'
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('Quote submission notice:', err.message);
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -272,10 +290,11 @@ export default function QuoteSection({ initialData = null }) {
 
                     <button
                       type="submit"
-                      className="w-full py-4 text-xs font-extrabold uppercase tracking-wider text-white bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] rounded-xl shadow-md flex items-center justify-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5 border border-red-500/50 active:scale-[0.98]"
+                      disabled={isSubmitting}
+                      className="w-full py-4 text-xs font-extrabold uppercase tracking-wider text-white bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] rounded-xl shadow-md flex items-center justify-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5 border border-red-500/50 active:scale-[0.98] disabled:opacity-75 disabled:cursor-not-allowed"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Submit Free Quote Request</span>
+                      <span>{isSubmitting ? 'Submitting Request...' : 'Submit Free Quote Request'}</span>
                     </button>
 
                     <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">

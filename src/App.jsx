@@ -22,6 +22,9 @@ import CareersPage from './pages/CareersPage';
 import PhotoGalleryPage from './pages/PhotoGalleryPage';
 import VideoGalleryPage from './pages/VideoGalleryPage';
 import ContactUs from './pages/ContactUs';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminProtectedRoute from './pages/admin/AdminProtectedRoute';
 
 // Slim top route change progress indicator driven 100% by CSS keyframes
 function TopProgressBar() {
@@ -137,6 +140,8 @@ export default function App() {
     scrollToQuote(estimatorData);
   };
 
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
     <div className="min-h-screen bg-white text-slate-800 flex flex-col font-sans selection:bg-[#ea1d25] selection:text-white">
       {/* Scroll restoration helper */}
@@ -145,257 +150,276 @@ export default function App() {
       {/* Top Route Change Progress Bar */}
       <TopProgressBar />
 
-      {/* Header & Top Bar with Navigation Support */}
-      <Header onOpenQuote={() => scrollToQuote()} />
+      {/* Header & Top Bar with Navigation Support (Hidden on Admin Routes) */}
+      {!isAdminRoute && <Header onOpenQuote={() => scrollToQuote()} />}
 
       {/* Main Content Area with React Router Routes & Page Transition */}
       <main className="flex-1">
         <div key={location.pathname} className="page-transition">
           <Routes location={location}>
-          {/* 1. Home Page */}
-          <Route
-            path="/"
-            element={
-              <HomePage
-                onSelectServiceForQuote={handleSelectServiceForQuote}
-                onTransferEstimatorToQuote={handleTransferEstimatorToQuote}
-                quoteInitialData={quoteInitialData}
-                scrollToQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 1. Home Page */}
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  onSelectServiceForQuote={handleSelectServiceForQuote}
+                  onTransferEstimatorToQuote={handleTransferEstimatorToQuote}
+                  quoteInitialData={quoteInitialData}
+                  scrollToQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 2. About Us Page (Matches https://alareeshdemolition.ae/about/) */}
-          <Route
-            path="/about"
-            element={
-              <AboutUs
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 2. About Us Page (Matches https://alareeshdemolition.ae/about/) */}
+            <Route
+              path="/about"
+              element={
+                <AboutUs
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 3. Services Listing Page (Matches https://alareeshdemolition.ae/services/) */}
-          <Route
-            path="/services"
-            element={
-              <ServicesPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 3. Services Listing Page (Matches https://alareeshdemolition.ae/services/) */}
+            <Route
+              path="/services"
+              element={
+                <ServicesPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 4. Individual Service Detail Pages with /service/:slug */}
-          <Route
-            path="/service/:slug"
-            element={
-              <ServiceDetailPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 4. Individual Service Detail Pages with /service/:slug */}
+            <Route
+              path="/service/:slug"
+              element={
+                <ServiceDetailPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 5. Direct 11 Service Routes (Matching Original Exact Sitemap URLs) */}
-          <Route
-            path="/building-demolition-services-in-dubai-uae"
-            element={
-              <DirectServiceWrapper
-                slug="building-demolition-services-in-dubai-uae"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/concrete-building-demolition"
-            element={
-              <DirectServiceWrapper
-                slug="concrete-building-demolition"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/villa-demolition-dubai"
-            element={
-              <DirectServiceWrapper
-                slug="villa-demolition-dubai"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/excavation-site-clearance-services-in-dubai"
-            element={
-              <DirectServiceWrapper
-                slug="excavation-site-clearance-services-in-dubai"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/demolition-contractors-in-uae"
-            element={
-              <DirectServiceWrapper
-                slug="demolition-contractors-in-uae"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/concrete-breaking-rcc-works"
-            element={
-              <DirectServiceWrapper
-                slug="concrete-breaking-rcc-works"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/scrap-metal-recycling"
-            element={
-              <DirectServiceWrapper
-                slug="scrap-metal-recycling"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/dismantling-structural-removal"
-            element={
-              <DirectServiceWrapper
-                slug="dismantling-structural-removal"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/excavation-earthworks"
-            element={
-              <DirectServiceWrapper
-                slug="excavation-earthworks"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/controlled-demolition-services"
-            element={
-              <DirectServiceWrapper
-                slug="controlled-demolition-services"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/transportation-waste-disposal"
-            element={
-              <DirectServiceWrapper
-                slug="transportation-waste-disposal"
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 5. Direct 11 Service Routes (Matching Original Exact Sitemap URLs) */}
+            <Route
+              path="/building-demolition-services-in-dubai-uae"
+              element={
+                <DirectServiceWrapper
+                  slug="building-demolition-services-in-dubai-uae"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/concrete-building-demolition"
+              element={
+                <DirectServiceWrapper
+                  slug="concrete-building-demolition"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/villa-demolition-dubai"
+              element={
+                <DirectServiceWrapper
+                  slug="villa-demolition-dubai"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/excavation-site-clearance-services-in-dubai"
+              element={
+                <DirectServiceWrapper
+                  slug="excavation-site-clearance-services-in-dubai"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/demolition-contractors-in-uae"
+              element={
+                <DirectServiceWrapper
+                  slug="demolition-contractors-in-uae"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/concrete-breaking-rcc-works"
+              element={
+                <DirectServiceWrapper
+                  slug="concrete-breaking-rcc-works"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/scrap-metal-recycling"
+              element={
+                <DirectServiceWrapper
+                  slug="scrap-metal-recycling"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/dismantling-structural-removal"
+              element={
+                <DirectServiceWrapper
+                  slug="dismantling-structural-removal"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/excavation-earthworks"
+              element={
+                <DirectServiceWrapper
+                  slug="excavation-earthworks"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/controlled-demolition-services"
+              element={
+                <DirectServiceWrapper
+                  slug="controlled-demolition-services"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/transportation-waste-disposal"
+              element={
+                <DirectServiceWrapper
+                  slug="transportation-waste-disposal"
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 6. Gallery Pages */}
-          <Route
-            path="/photo-gallery"
-            element={
-              <PhotoGalleryPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/video-gallery"
-            element={
-              <VideoGalleryPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 6. Gallery Pages */}
+            <Route
+              path="/photo-gallery"
+              element={
+                <PhotoGalleryPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/video-gallery"
+              element={
+                <VideoGalleryPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 7. Careers Page */}
-          <Route
-            path="/careers-dubai"
-            element={
-              <CareersPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/careers"
-            element={
-              <CareersPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 7. Careers Page */}
+            <Route
+              path="/careers-dubai"
+              element={
+                <CareersPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/careers"
+              element={
+                <CareersPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 8. Our Clients Page (Matches https://alareeshdemolition.ae/our-clients/) */}
-          <Route
-            path="/our-clients"
-            element={
-              <ClientsPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/clients"
-            element={
-              <ClientsPage
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 8. Our Clients Page (Matches https://alareeshdemolition.ae/our-clients/) */}
+            <Route
+              path="/our-clients"
+              element={
+                <ClientsPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/clients"
+              element={
+                <ClientsPage
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 9. Contact Us Page (Matches https://alareeshdemolition.ae/contact/) */}
-          <Route
-            path="/contact"
-            element={
-              <ContactUs
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
-          <Route
-            path="/contact-us"
-            element={
-              <ContactUs
-                includeLayout={false}
-                onOpenQuote={scrollToQuote}
-              />
-            }
-          />
+            {/* 9. Contact Us Page (Matches https://alareeshdemolition.ae/contact/) */}
+            <Route
+              path="/contact"
+              element={
+                <ContactUs
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
+            <Route
+              path="/contact-us"
+              element={
+                <ContactUs
+                  includeLayout={false}
+                  onOpenQuote={scrollToQuote}
+                />
+              }
+            />
 
-          {/* 10. Projects Redirect / Anchor */}
-          <Route
-            path="/projects"
-            element={<Navigate to="/#gallery" replace />}
-          />
+            {/* 10. Admin Portal & Protected Dashboard */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin"
+              element={
+                <AdminProtectedRoute>
+                  {({ profile }) => <AdminDashboard profile={profile} />}
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/*"
+              element={
+                <AdminProtectedRoute>
+                  {({ profile }) => <AdminDashboard profile={profile} />}
+                </AdminProtectedRoute>
+              }
+            />
 
-          {/* Fallback Catch-All Route */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            {/* 11. Projects Redirect / Anchor */}
+            <Route
+              path="/projects"
+              element={<Navigate to="/#gallery" replace />}
+            />
+
+            {/* Fallback Catch-All Route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </div>
       </main>
 
-      {/* Footer with Navigation Support */}
-      <Footer />
+      {/* Footer with Navigation Support (Hidden on Admin Routes) */}
+      {!isAdminRoute && <Footer />}
 
-      {/* Floating Action Buttons */}
-      <FloatingActions />
+      {/* Floating Action Buttons (Hidden on Admin Routes) */}
+      {!isAdminRoute && <FloatingActions />}
     </div>
   );
 }

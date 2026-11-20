@@ -13,6 +13,7 @@ import Footer from '../components/Footer';
 import FloatingActions from '../components/FloatingActions';
 import Reveal from '../components/Reveal';
 import { COMPANY_INFO } from '../data/companyData';
+import { submitCareerApplication } from '../lib/supabase';
 
 export default function CareersPage({ includeLayout = true, onOpenQuote }) {
   const [formData, setFormData] = useState({
@@ -25,10 +26,26 @@ export default function CareersPage({ includeLayout = true, onOpenQuote }) {
     notes: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await submitCareerApplication({
+        applicant_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        job_title: formData.position,
+        experience_summary: `Experience: ${formData.experience} | Location: ${formData.location} | Notes: ${formData.notes || 'None'}`
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('Career application notice:', err.message);
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const openPositions = [
@@ -466,9 +483,10 @@ export default function CareersPage({ includeLayout = true, onOpenQuote }) {
 
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:scale-95"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#ea1d25] to-[#c41219] hover:from-[#ff2d35] hover:to-[#ea1d25] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed"
                   >
-                    <span>Submit Application</span>
+                    <span>{isSubmitting ? 'Submitting Application...' : 'Submit Application'}</span>
                     <Send className="w-4 h-4" />
                   </button>
                 </div>

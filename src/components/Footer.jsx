@@ -231,6 +231,16 @@ export default function Footer() {
             </a>
             <span className="hidden sm:inline text-slate-300">•</span>
             <span className="text-slate-700 font-medium">Dubai, United Arab Emirates</span>
+            <span className="hidden sm:inline text-slate-300">•</span>
+            <Link
+              to="/admin/login"
+              onClick={handleScrollToTop}
+              className="hover:text-[#ea1d25] flex items-center gap-1 transition-colors font-medium text-slate-600"
+              title="Super Admin Portal Login"
+            >
+              <Shield className="w-3 h-3 text-[#00a4e4]" />
+              <span>Admin Portal</span>
+            </Link>
           </div>
         </div>
       </div>
